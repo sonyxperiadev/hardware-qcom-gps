@@ -1,11 +1,3 @@
-
-prebuilt_etc {
-
-    name: "gps.conf",
-    vendor: true,
-    src: "gps.conf",
-}
-
 prebuilt_etc {
 
     name: "flp.conf",
