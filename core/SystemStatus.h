@@ -482,13 +482,12 @@ class SystemStatusNetworkInfo : public SystemStatusItemBase,
     NetworkInfoDataItemBase* mSrcObjPtr;
 public:
     inline SystemStatusNetworkInfo(
-            int32_t type = 0,
-            std::string typeName = "",
-            string subTypeName = "",
-            bool connected = false,
-            bool roaming = false,
-            uint64_t networkHandle = NETWORK_HANDLE_UNKNOWN,
-            string apn = "") :
+            int32_t type=0,
+            std::string typeName="",
+            string subTypeName="",
+            bool connected=false,
+            bool roaming=false,
+            uint64_t networkHandle=NETWORK_HANDLE_UNKNOWN) :
             NetworkInfoDataItemBase(
                     (NetworkType)type,
                     type,
@@ -497,7 +496,7 @@ public:
                     connected && (!roaming),
                     connected,
                     roaming,
-                    networkHandle, apn),
+                    networkHandle),
             mSrcObjPtr(nullptr) {}
     inline SystemStatusNetworkInfo(const NetworkInfoDataItemBase& itemBase) :
             NetworkInfoDataItemBase(itemBase),
@@ -509,19 +508,14 @@ public:
         for (uint8_t i = 0; rtv && i < MAX_NETWORK_HANDLES; ++i) {
             rtv &= (mAllNetworkHandles[i] == peer.mAllNetworkHandles[i]);
         }
-        return peer.mApn.compare(mApn);
+        return rtv;
     }
     inline virtual SystemStatusItemBase& collate(SystemStatusItemBase& curInfo) {
         uint64_t allTypes = (static_cast<SystemStatusNetworkInfo&>(curInfo)).mAllTypes;
-        string& apn = (static_cast<SystemStatusNetworkInfo&>(curInfo)).mApn;
         // Replace current with cached table for now and then update
         memcpy(mAllNetworkHandles,
                (static_cast<SystemStatusNetworkInfo&>(curInfo)).getNetworkHandle(),
                sizeof(mAllNetworkHandles));
-        // Update the apn for non-mobile type connections.
-        if (TYPE_MOBILE != mType && apn.compare("") != 0) {
-            mApn = apn;
-        }
         if (mConnected) {
             mAllTypes |= allTypes;
             for (uint8_t i = 0; i < MAX_NETWORK_HANDLES; ++i) {
@@ -583,8 +577,8 @@ public:
         return *this;
     }
     inline void dump(void) override {
-        LOC_LOGD("NetworkInfo: mAllTypes=%" PRIx64 " connected=%u mType=%x mApn=%s",
-                 mAllTypes, mConnected, mType, mApn.c_str());
+        LOC_LOGD("NetworkInfo: mAllTypes=%" PRIx64 " connected=%u mType=%x",
+                 mAllTypes, mConnected, mType);
     }
 };
 
@@ -913,7 +907,7 @@ public:
     bool getReport(SystemStatusReports& reports, bool isLatestonly = false) const;
     bool setDefaultGnssEngineStates(void);
     bool eventConnectionStatus(bool connected, int8_t type,
-                               bool roaming, NetworkHandle networkHandle, string& apn);
+                               bool roaming, NetworkHandle networkHandle);
     bool updatePowerConnectState(bool charging);
     void resetNetworkInfo();
 };
