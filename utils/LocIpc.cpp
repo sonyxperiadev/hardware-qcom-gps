@@ -168,7 +168,7 @@ ssize_t Sock::recvfrom(const LocIpcRecver& recver, const shared_ptr<ILocIpcListe
             size_t payLoadSize = nBytes - sizeof(LOC_IPC_HEAD);
             if (iter == sSockToPayloadMap.end()) {
                 size_t totalSize = 0;
-                sscanf(msg.data() + sizeof(LOC_IPC_HEAD) - 9, "%x", &totalSize);
+                sscanf(msg.data() + sizeof(LOC_IPC_HEAD) - 9, "%zx", &totalSize);
                 sSockToPayloadMap[key] = std::make_pair(totalSize - payLoadSize,
                                                         string(totalSize, 0));
                 memcpy((char*) sSockToPayloadMap[key].second.data(), (char *)msg.data()+
