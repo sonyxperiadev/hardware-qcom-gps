@@ -388,7 +388,7 @@ void GnssAPIClient::gnssConfigurationUpdate(const GnssConfig& gnssConfig) {
 
 // callbacks
 void GnssAPIClient::onCapabilitiesCb(LocationCapabilitiesMask capabilitiesMask) {
-    LOC_LOGd("mLocationCapabilitiesMask=%02x capabilitiesMask=%02x",
+    LOC_LOGd("mLocationCapabilitiesMask=0x%" PRIx64 ", capabilitiesMask=0x%" PRIx64 ".",
              mLocationCapabilitiesMask, capabilitiesMask);
 
     updateCapabilities(capabilitiesMask, false);
