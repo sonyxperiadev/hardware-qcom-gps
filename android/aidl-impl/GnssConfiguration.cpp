@@ -20,7 +20,7 @@
 /*
 Changes from Qualcomm Innovation Center are provided under the following license:
 
-Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted (subject to the limitations in the
@@ -292,7 +292,7 @@ bool GnssConfiguration::setBlocklistedSource(GnssSvIdSource& copyToSource,
         break;
     default:
         copyToSource.constellation = GNSS_SV_TYPE_UNKNOWN;
-        LOC_LOGe("Invalid constellation %d", copyFromSource.constellation);
+        LOC_LOGe("Invalid constellation %d", (int)copyFromSource.constellation);
         retVal = false;
         break;
     }

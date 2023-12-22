@@ -252,7 +252,7 @@ bool GnssAPIClient::gnssSetPositionMode(IGnss::GnssPositionMode mode,
         GnssPowerMode powerMode, uint32_t timeBetweenMeasurement)
 {
     LOC_LOGd("]: (%d %d %d %d %d %d %d)",
-            (int)mode, recurrence, minIntervalMs, preferredAccuracyMeters,
+            (int)mode, (int)recurrence, minIntervalMs, preferredAccuracyMeters,
             preferredTimeMs, (int)powerMode, timeBetweenMeasurement);
     bool retVal = true;
 
@@ -294,7 +294,7 @@ bool GnssAPIClient::gnssSetPositionMode(IGnss::GnssPositionMode mode,
 
 void GnssAPIClient::gnssDeleteAidingData(IGnss::GnssAidingData aidingDataFlags)
 {
-    LOC_LOGd("]: (%02x)", aidingDataFlags);
+    LOC_LOGd("]: (%02x)", (uint32_t)aidingDataFlags);
     if (mControlClient == nullptr) {
         return;
     }
