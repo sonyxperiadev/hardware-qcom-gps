@@ -30,7 +30,7 @@
 /*
 Changes from Qualcomm Innovation Center are provided under the following license:
 
-Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted (subject to the limitations in the
@@ -266,7 +266,7 @@ void AidlBatteryListenerImpl::serviceDied(void* cookie) {
 ndk::ScopedAStatus AidlBatteryListenerImpl::healthInfoChanged(const HealthInfo& info) {
     std::unique_lock<std::mutex> lock(mLock);
     if (info.batteryStatus != mStatus) {
-        LOC_LOGd("batteryStatus changed from %d to %d", mStatus, info.batteryStatus);
+        LOC_LOGd("batteryStatus changed from %d to %d", (int)mStatus, (int)info.batteryStatus);
         mStatus = info.batteryStatus;
         mCond.notify_one();
     }
@@ -444,7 +444,8 @@ Return<void> HidlBatteryListenerImpl::healthInfoChanged(
         const hardware::health::V2_0::HealthInfo& info) {
     std::unique_lock<std::mutex> lock(mLock);
     if (info.legacy.batteryStatus != mStatus) {
-        LOC_LOGd("batteryStatus changed from %d to %d", mStatus, info.legacy.batteryStatus);
+        LOC_LOGd("batteryStatus changed from %d to %d", (int)mStatus,
+                (int)info.legacy.batteryStatus);
         mStatus = info.legacy.batteryStatus;
         mCond.notify_one();
     }
